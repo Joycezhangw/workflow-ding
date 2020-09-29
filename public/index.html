@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+<noscript>
+    <strong
+    >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+    >
+</noscript>
+<div id="app"></div>
+<script>
+    window.__workFlowConfig = {
+        processConfig: {
+            "name": "发起人", "type": "start", "nodeId": "sid-startevent", "childNode": {
+                "type": "route",
+                "prevId": "sid-startevent",
+                "nodeId": "6c70_4746",
+                "conditionNodes": [{
+                    "name": "条件1",
+                    "type": "condition",
+                    "prevId": "6c70_4746",
+                    "nodeId": "8e22_bb38",
+                    "properties": {
+                        "conditions": [[{
+                            "type": "dingtalk_actioner_range_condition",
+                            "paramKey": "报销金额(元)",
+                            "paramLabel": "报销金额(元)",
+                            "lowerBound": 100,
+                            "upperBound": "",
+                            "isEmpty": false,
+                            "valid": "valid"
+                        }]]
+                    },
+                    "childNode": {
+                        "name": "审批人",
+                        "type": "approver",
+                        "prevId": "8e22_bb38",
+                        "nodeId": "sid-1234_5678",
+                        "properties": {
+                            "activateType": "ONE_BY_ONE",
+                            "agreeAll": false,
+                            "allowTaskAppend": false,
+                            "allowTaskRedirect": true,
+                            "actionerRules": [{
+                                "type": "target_select",
+                                "multi": 1,
+                                "select": ["allStaff"],
+                                "range": {"approvals": [], "labels": [], "allStaff": null},
+                                "isEmpty": false,
+                                "key": "manual_sid-1234_5678_30a8_b373"
+                            }]
+                        },
+                        "childNode": {
+                            "name": "抄送人",
+                            "type": "notifier",
+                            "prevId": "sid-1234_5678",
+                            "nodeId": "9955_7e43",
+                            "properties": {
+                                "actionerRules": [{
+                                    "select": ["allStaff"],
+                                    "range": {"allStaff": null},
+                                    "multi": 1,
+                                    "type": "target_select",
+                                    "key": "manual_9955_7e43_0c96_39d8"
+                                }]
+                            }
+                        }
+                    }
+                }, {
+                    "name": "条件2",
+                    "type": "condition",
+                    "prevId": "6c70_4746",
+                    "nodeId": "14de_0c19",
+                    "properties": {
+                        "conditions": [[{
+                            "type": "dingtalk_actioner_range_condition",
+                            "paramKey": "报销金额(元)",
+                            "paramLabel": "报销金额(元)",
+                            "lowerBound": 600,
+                            "upperBound": "",
+                            "isEmpty": false,
+                            "valid": "valid"
+                        }]]
+                    },
+                    "childNode": {
+                        "name": "UNKNOWN",
+                        "type": "approver",
+                        "prevId": "14de_0c19",
+                        "nodeId": "212c_43cc",
+                        "properties": {
+                            "activateType": "ONE_BY_ONE",
+                            "agreeAll": false,
+                            "actionerRules": [{
+                                "type": "target_approval",
+                                "approvals": [{"userName": "张伟", "workNo": "02270936775167"}],
+                                "isEmpty": false
+                            }]
+                        },
+                        "childNode": {
+                            "name": "UNKNOWN",
+                            "type": "notifier",
+                            "prevId": "212c_43cc",
+                            "nodeId": "5cbf_e760",
+                            "properties": {
+                                "actionerRules": [{
+                                    "type": "target_approval",
+                                    "approvals": [{"userName": "张伟", "workNo": "02270936775167"}]
+                                }, {
+                                    "select": ["allStaff"],
+                                    "range": {"allStaff": null},
+                                    "multi": 1,
+                                    "type": "target_select",
+                                    "key": "manual_5cbf_e760_0897_776f"
+                                }]
+                            },
+                            "childNode": {
+                                "name": "办理人",
+                                "type": "audit",
+                                "prevId": "5cbf_e760",
+                                "nodeId": "428c_0fa9",
+                                "properties": {
+                                    "activateType": "ALL",
+                                    "agreeAll": true,
+                                    "actionerRules": [{
+                                        "type": "target_management",
+                                        "level": 1,
+                                        "isEmpty": false,
+                                        "autoUp": true,
+                                        "actType": "and"
+                                    }],
+                                    "noneActionerAction": "admin"
+                                }
+                            }
+                        }
+                    }
+                }, {
+                    "name": "条件3",
+                    "type": "condition",
+                    "prevId": "6c70_4746",
+                    "nodeId": "b28b_b0c9",
+                    "properties": {"conditions": []}
+                }],
+                "properties": {},
+                "childNode": {
+                    "name": "办理人",
+                    "type": "audit",
+                    "prevId": "6c70_4746",
+                    "nodeId": "ae5f_7da6",
+                    "properties": {
+                        "activateType": "ALL",
+                        "agreeAll": true,
+                        "actionerRules": [{
+                            "type": "target_management",
+                            "level": 1,
+                            "isEmpty": false,
+                            "autoUp": true,
+                            "actType": "and"
+                        }],
+                        "noneActionerAction": "admin"
+                    }
+                }
+            }
+        },
+        processStatus: "PUBLISHED"
+    }
+</script>
+<!-- built files will be auto injected -->
+</body>
+</html>

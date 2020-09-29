@@ -15,7 +15,7 @@
             ></path>
           </svg>
         </div>
-        <condition-title :nodeConfig="nodeConfig" :node-index="nodeIndex"></condition-title>
+        <condition-title :node="nodeConfig" :node-index="nodeIndex"></condition-title>
 
         <div class="sort-right" v-if="nodeIndex != nodeLen - 1">
           <svg
@@ -45,16 +45,16 @@ export default {
   name: "conditionNode",
   components: { AddNodeBtn,conditionTitle },
   props: {
-    nodeConfig: {
+    nodeConfig: {//条件流程数据
       type: Object,
     },
-    nodeIndex: {
+    nodeIndex: {//条件流程索引
       type: Number,
       default: 0,
     },
-    nodeLen: {
+    nodeLen: {//条件流程数组长度
       type: Number,
-      defalut: 0,
+      default: 0,
     },
   },
 };

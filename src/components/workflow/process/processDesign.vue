@@ -37,8 +37,8 @@ import nodeWrap from "@/components/workflow/process/nodeWrap";
 export default {
   name: "processDesign",
   components: {
-    endNode,
-    nodeWrap,
+    endNode,//结束流程组件
+    nodeWrap,//流程节点
   },
   props: {
     processConfig: {
@@ -48,15 +48,16 @@ export default {
   },
   data() {
     return {
-      zoomValue: 100,
+      zoomValue: 100,//流程设计面板初始缩放值
       zoomStep: 10, // 缩放步长
     };
   },
   methods: {
+    //缩放设计面板
     changeZoomSize(val) {
       let v = this.zoomValue + val;
       if (v >= 50 && v <= 300) {
-        // 缩放介于0%~200%
+        // 缩放介于50%~300%
         this.zoomValue = v;
       }
     },

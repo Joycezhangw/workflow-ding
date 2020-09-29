@@ -45,23 +45,26 @@ import hbIcon from "@/components/icon/index";
 export default {
   name: "App",
   components: {
-    processDesign,
-    hbIcon,
+    processDesign,//流程设计面板
+    hbIcon,//字体图标
   },
   data() {
     return {
-      tabs: [
+      tabs: [//导航条
         { label: "基础设置", key: "basicSetting" },
         { label: "表单设计", key: "formDesign" },
         { label: "流程设计", key: "processDesign" },
         { label: "高级设置", key: "advancedSetting" },
         { label: "iconfont", key: "iconfont" },
       ],
-      tabActiveName: "basicSetting",
-      processConfig: window.__workFlowConfig.processConfig,
+      tabActiveName: "basicSetting",//导航条初始位置
+      processConfig: window.__workFlowConfig.processConfig,//流程设计基础数据
     };
   },
   computed: {
+    /**
+     * 导航条选中状态动画切换
+     */
     translate3d() {
       let index = this.tabs.findIndex((t) => t.key === this.tabActiveName),
         step = 32;
@@ -74,6 +77,9 @@ export default {
     },
   },
   methods: {
+    /**
+     * 切换导航条
+     */
     changeTabStep(item) {
       this.tabActiveName = item.key;
     },

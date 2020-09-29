@@ -1,6 +1,6 @@
 <script>
     import nodeUtil from "@/libs/nodeUtils"
-
+    //主流程节点面板标题背景颜色，图标，内容
     const nodeCardConfig = {
         start: {
             bgColor: "rgb(87, 106, 149)",
@@ -19,11 +19,17 @@
         },
         audit: {
             bgColor: "rgb(251, 96, 45)",
-            content: "发起人自选",
-            icon: "&#59707;",
+            content: "请选中办理人",
+            icon: "&#59707;",//该 iconfont 跟  notifier 是一样，后期要统一管理
         }
     };
-
+    /**
+     * 创建流程节点，不创建条件节点
+     * @param that 当前vue对象
+     * @param nodeConfig  流程节点数据
+     * @param h  vue  createElement
+     * @returns {[]}
+     */
     function createNormalNodeBox(that, nodeConfig, h) {
         return (<div class="node-wrap">
             <div class={`node-wrap-box ${nodeConfig.type === "start" ? " node_sid-startevent start-node" : ""}`}>
@@ -33,6 +39,9 @@
         </div>)
     }
 
+    /**
+     * 重新定义 this 指向到 vue
+     * */
     const createNodeBoxFunc = (...arg) => createNormalNodeBox.call(arg[0], ...arg);
 
     let nodeFun = {
@@ -63,12 +72,19 @@
         }
     };
 
+    /**
+     * 递归创建流程节点
+     * @param that 当前vue对象
+     * @param nodeConfig  流程节点数据
+     * @param h  vue  createElement
+     * @returns {[]}
+     */
     function nodeFactory(that, nodeConfig, h) {
-        console.log(nodeConfig)
         let nodeBox = [],
-            selfNode = ((nodeUtil.isStartNode(nodeConfig) || nodeUtil.isNotifierNode(nodeConfig) || nodeUtil.isApproverNode(nodeConfig) || nodeUtil.isAuditNode(nodeConfig)) && nodeFun[nodeConfig.type].call(that, that, nodeConfig, h))
+            selfNode = ((nodeUtil.isStartNode(nodeConfig) || nodeUtil.isNotifierNode(nodeConfig) || nodeUtil.isApproverNode(nodeConfig) || nodeUtil.isAuditNode(nodeConfig)) && nodeFun[nodeConfig.type].call(that, that, nodeConfig, h));
+        //分支流程节点
         if(nodeUtil.isRouteNode(nodeConfig)){
-            selfNode=nodeFun[nodeConfig.type].call(that, that, nodeConfig, h);//createBranchNodeBox(that,nodeConfig,h);
+            selfNode=nodeFun[nodeConfig.type].call(that, that, nodeConfig, h);
         }
         nodeBox.push(selfNode);
         nodeConfig.childNode && nodeBox.push(nodeFactory.call(that, that, nodeConfig.childNode, h));
@@ -82,9 +98,9 @@
     export default {
         name: "nodeWrap",
         comments: {
-            addNodeBtn,
-            nodeTitle,
-            conditionNode
+            addNodeBtn,//添加流程节点组件
+            nodeTitle,//流程节点标题组件
+            conditionNode//条件流程节点组件
         },
         props: {
             nodeConfig: {type: Object, required: true},

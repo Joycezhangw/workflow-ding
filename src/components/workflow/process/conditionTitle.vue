@@ -1,12 +1,12 @@
 <template>
   <div class="title-wrapper">
     <template v-if="!editing">
-      <span class="editable-title" @click="changeNodeTitle">{{ nodeConfig.name }}</span>
+      <span class="editable-title" @click="changeNodeTitle">{{ node.name }}</span>
     </template>
     <template v-else>
       <input
         class="hbie-input editable-title-input"
-        v-model.trim="nodeConfig.name"
+        v-model.trim="node.name"
         @blur="blurEvent()"
         @focus="$event.currentTarget.select()"
         v-focus
@@ -42,10 +42,11 @@
 export default {
   name: "conditionTitle",
   props: {
-    nodeConfig: {
+    node: {//流程数据
       type: Object,
+      required: true
     },
-    nodeIndex: {
+    nodeIndex: {//条件流程索引
       type: Number,
       default: 1,
     },
@@ -56,9 +57,15 @@ export default {
     };
   },
   methods: {
+    /**
+     * 选中标题，切换到文本框
+     */
     changeNodeTitle() {
       this.editing = !this.editing;
     },
+    /**
+     * 文本框失去焦点
+     */
     blurEvent() {
       this.editing = false;
     },

@@ -31,15 +31,15 @@
     export default {
         name: "nodeTitle",
         props: {
-            node: {
+            node: {//流程节点数据
                 type: Object,
                 required: true,
             },
-            isStartNode: {
+            isStartNode: {//是否是流程开始节点
                 type: Boolean,
                 default: false,
             },
-            nodeCur: {
+            nodeCur: {//流程节点面板初始数据
                 type: Object,
             },
         },
@@ -49,10 +49,16 @@
             };
         },
         methods: {
+            /**
+             * 选中标题，切换到文本框
+             */
             changeNodeTitle() {
                 //开始节点不能修改标题
                 if (!this.isStartNode) this.editing = !this.editing;
             },
+            /**
+             * 文本框失去焦点
+             */
             blurEvent() {
                 this.editing = false;
             },
